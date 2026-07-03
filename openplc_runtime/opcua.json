@@ -1,0 +1,95 @@
+[
+  {
+    "name": "opcua_server",
+    "protocol": "OPC-UA",
+    "config": {
+      "format_version": 2,
+      "server": {
+        "name": "OpenPLC OPC UA Server",
+        "application_uri": "urn:openplc:opcua:server",
+        "product_uri": "urn:openplc:runtime",
+        "endpoint_url": "opc.tcp://0.0.0.0:4840/openplc/opcua",
+        "security_profiles": [
+          {
+            "name": "insecure",
+            "enabled": true,
+            "security_policy": "None",
+            "security_mode": "None",
+            "auth_methods": [
+              "Anonymous",
+              "Username"
+            ]
+          }
+        ]
+      },
+      "security": {
+        "server_certificate_strategy": "auto_self_signed",
+        "server_certificate_custom": null,
+        "server_private_key_custom": null,
+        "trusted_client_certificates": []
+      },
+      "users": [
+        {
+          "type": "password",
+          "username": "admin",
+          "password_hash": "pbkdf2:sha256:600000$eisAzueKsN3au/8reEhRDA==$ecnVtcaifmk4hHQTEF8Il0e46RCVLLXDMzYmx3MDCe4=",
+          "certificate_id": null,
+          "role": "engineer"
+        }
+      ],
+      "cycle_time_ms": 100,
+      "address_space": {
+        "namespace_uri": "urn:openplc:opcua:namespace",
+        "variables": [
+          {
+            "node_id": "PLC.main.in1",
+            "browse_name": "in1",
+            "display_name": "In1",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Input variable",
+            "arr": 0,
+            "elem": 0,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.out1",
+            "browse_name": "out1",
+            "display_name": "Out1",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Output variable",
+            "arr": 0,
+            "elem": 1,
+            "permissions": {
+              "viewer": "r",
+              "operator": "r",
+              "engineer": "r"
+            }
+          },
+          {
+            "node_id": "PLC.main.Alarm",
+            "browse_name": "Alarm",
+            "display_name": "Alarm",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "",
+            "arr": 0,
+            "elem": 8,
+            "permissions": {
+              "viewer": "r",
+              "operator": "r",
+              "engineer": "r"
+            }
+          }
+        ],
+        "structures": [],
+        "arrays": []
+      }
+    }
+  }
+]
