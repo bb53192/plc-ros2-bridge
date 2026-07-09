@@ -19,6 +19,7 @@ MODBUS_PORT = 502
 
 ADDR_MOTION = 1
 ADDR_DOOR = 2
+ADDR_PART_PRESENT = 3  # gripper cell: komad naslonjen na graničnik na kraju trake
 DEVICE_ID = 0  # catch-all device id za single=True context
 
 
@@ -30,6 +31,7 @@ class ModbusSensorBridge(Node):
 
         self.create_subscription(Bool, '/sensors/motion', self.motion_callback, 10)
         self.create_subscription(Bool, '/sensors/door_closed', self.door_callback, 10)
+        self.create_subscription(Bool, '/sensors/part_present', self.part_present_callback, 10)
 
         self.get_logger().info("Modbus sensor bridge node pokrenut")
 
@@ -47,6 +49,10 @@ class ModbusSensorBridge(Node):
     def door_callback(self, msg: Bool):
         self._write_value(ADDR_DOOR, msg.data)
         self.get_logger().info(f"Door Closed -> {msg.data}")
+
+    def part_present_callback(self, msg: Bool):
+        self._write_value(ADDR_PART_PRESENT, msg.data)
+        self.get_logger().info(f"Part Present -> {msg.data}")
 
 
 async def run_modbus_server(node: ModbusSensorBridge):
