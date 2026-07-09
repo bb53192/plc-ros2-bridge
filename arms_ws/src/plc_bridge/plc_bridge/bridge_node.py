@@ -1,13 +1,18 @@
 import asyncio
+import os
 import threading
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Bool
 from asyncua import Client, ua
 
-OPCUA_URL = "opc.tcp://192.168.248.129:4840/openplc/opcua"
-OPCUA_USER = "admin"
-OPCUA_PASS = "1234"
+# Overridable via env vars, e.g.:
+#   OPCUA_URL=opc.tcp://127.0.0.1:4840/openplc/opcua ros2 run plc_bridge bridge_node
+# For anonymous login (no user/pass), set OPCUA_USER to an empty string:
+#   OPCUA_USER= ros2 run plc_bridge bridge_node
+OPCUA_URL = os.environ.get("OPCUA_URL", "opc.tcp://127.0.0.1:4840/openplc/opcua")
+OPCUA_USER = os.environ.get("OPCUA_USER", "admin")
+OPCUA_PASS = os.environ.get("OPCUA_PASS", "1234")
 POLL_INTERVAL = 0.1
 
 
@@ -75,19 +80,25 @@ class PlcBridge(Node):
         with self._lock:
             self.pending_writes[name] = value
 
-    def publish_if_changed(self, name, value):
+    def publish_value(self, name, value):
+        # Publish every poll so late-joining / reconnecting subscribers always get the
+        # current state (a change-only publish is lost if the subscriber matched late).
+        msg = Bool()
+        msg.data = bool(value)
+        self.publishers_map[name].publish(msg)
         if value != self.last_values.get(name):
-            msg = Bool()
-            msg.data = bool(value)
-            self.publishers_map[name].publish(msg)
             self.get_logger().info(f"{name} -> {value}")
             self.last_values[name] = value
 
 
 async def opcua_loop(node: PlcBridge):
     client = Client(url=OPCUA_URL)
-    client.set_user(OPCUA_USER)
-    client.set_password(OPCUA_PASS)
+    if OPCUA_USER:
+        client.set_user(OPCUA_USER)
+        client.set_password(OPCUA_PASS)
+        node.get_logger().info(f"Spajam se na {OPCUA_URL} kao '{OPCUA_USER}'")
+    else:
+        node.get_logger().info(f"Spajam se na {OPCUA_URL} anonimno")
 
     async with client:
         node.get_logger().info("Spojen na OPC UA server, pokrecem discovery")
@@ -98,7 +109,7 @@ async def opcua_loop(node: PlcBridge):
             for name, (opcua_node, _, _) in variables.items():
                 try:
                     value = await opcua_node.read_value()
-                    node.publish_if_changed(name, value)
+                    node.publish_value(name, value)
                 except Exception as e:
                     node.get_logger().warn(f"Greska pri citanju {name}: {e}")
 
