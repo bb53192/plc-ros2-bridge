@@ -85,6 +85,126 @@
               "operator": "r",
               "engineer": "r"
             }
+          },
+          {
+            "node_id": "PLC.main.belt_run",
+            "browse_name": "belt_run",
+            "display_name": "belt_run",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Conveyor run command (PLC -> ROS)",
+            "arr": 0,
+            "elem": 2,
+            "permissions": {
+              "viewer": "r",
+              "operator": "r",
+              "engineer": "r"
+            }
+          },
+          {
+            "node_id": "PLC.main.robot_start",
+            "browse_name": "robot_start",
+            "display_name": "robot_start",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Robot pick-place trigger (PLC -> ROS)",
+            "arr": 0,
+            "elem": 3,
+            "permissions": {
+              "viewer": "r",
+              "operator": "r",
+              "engineer": "r"
+            }
+          },
+          {
+            "node_id": "PLC.main.auto_mode",
+            "browse_name": "auto_mode",
+            "display_name": "auto_mode",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "AUTO/MANUAL mode written by ROS (ROS -> PLC)",
+            "arr": 0,
+            "elem": 4,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.robot_busy",
+            "browse_name": "robot_busy",
+            "display_name": "robot_busy",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Robot busy handshake written by ROS (ROS -> PLC)",
+            "arr": 0,
+            "elem": 5,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.cycle_done",
+            "browse_name": "cycle_done",
+            "display_name": "cycle_done",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Cycle done handshake written by ROS (ROS -> PLC)",
+            "arr": 0,
+            "elem": 6,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.man_belt_cmd",
+            "browse_name": "man_belt_cmd",
+            "display_name": "man_belt_cmd",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Manual belt command from HMI (ROS -> PLC)",
+            "arr": 0,
+            "elem": 7,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.man_robot_cmd",
+            "browse_name": "man_robot_cmd",
+            "display_name": "man_robot_cmd",
+            "datatype": "BOOL",
+            "size": 1,
+            "description": "Manual robot trigger from HMI (ROS -> PLC)",
+            "arr": 0,
+            "elem": 8,
+            "permissions": {
+              "viewer": "rw",
+              "operator": "rw",
+              "engineer": "rw"
+            }
+          },
+          {
+            "node_id": "PLC.main.state",
+            "browse_name": "state",
+            "display_name": "state",
+            "datatype": "INT",
+            "size": 1,
+            "description": "Cell sequencer state 0..3 (PLC -> ROS)",
+            "arr": 0,
+            "elem": 9,
+            "permissions": {
+              "viewer": "r",
+              "operator": "r",
+              "engineer": "r"
+            }
           }
         ],
         "structures": [],
