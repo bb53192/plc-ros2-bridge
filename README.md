@@ -3,7 +3,7 @@
 OpenPLC Runtime v4 + ROS2 (arm_api2) integracija preko OPC UA i Modbus TCP.
 
 ## Sadržaj
-- `arms_ws/src/plc_bridge/` — ROS2 paket (bridge_node = OPC UA, modbus_sensor_bridge = Modbus senzor server; vidi `bridge_node.md`/`modbus_sensor_bridge.md` unutra za detalje)
+- `plc_bridge/` — ROS2 paket (bridge_node = OPC UA, modbus_sensor_bridge = Modbus senzor server; vidi `bridge_node.md`/`modbus_sensor_bridge.md` unutra za detalje)
 
 PLC projekt (program, plugin config, OPC UA/Modbus izlaganje) više nije ovdje — vidi [CroboticSolutions/openplc](https://github.com/CroboticSolutions/openplc).
 
